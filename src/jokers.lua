@@ -34,9 +34,9 @@ SMODS.Joker {
     end
   end,
   credits = {
-    art = "cartridges",
-    code = "cartridges",
-    idea = "cartridges",
+    art = "Esther",
+    code = "Esther",
+    idea = "Esther",
   }
 }
 
@@ -81,9 +81,9 @@ SMODS.Joker {
     end
   end,
   credits = {
-    art = "cartridges",
-    code = "cartridges",
-    idea = "cartridges",
+    art = "Esther",
+    code = "Esther",
+    idea = "Esther",
   }
 }
 
@@ -111,7 +111,7 @@ SMODS.Joker {
   pos = { x = 0, y = 0 },
   rarity = 2,
   calculate = function(self, card, context)
-    if context.final_scoring_step then
+    if context.joker_main then
       return {
         mult = math.floor(#G.deck.cards / 7) * 2
       }
@@ -119,8 +119,8 @@ SMODS.Joker {
   end,
   credits = {
     art = "Rayquandia",
-    code = "cartridges",
-    idea = "cartridges",
+    code = "Esther",
+    idea = "Esther",
   }
 }
 
@@ -156,8 +156,8 @@ SMODS.Joker {
   end,
   credits = {
     art = "Rayquandia",
-    code = "cartridges",
-    idea = "cartridges",
+    code = "Esther",
+    idea = "Esther",
   }
 }
 
@@ -176,19 +176,20 @@ SMODS.Joker {
   },
   config = { extra = { odds = 3 } },
   rarity = 2,
+  blueprint_compat = false,
   loc_vars = function(self, info_queue, card)
     local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'star_slotmachine')
     return { vars = { numerator, denominator } }
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.play and context.individual and context.other_card:get_id() == 7 and
+    if context.cardarea == G.play and context.individual and context.other_card:get_id() == 7 and not context.blueprint and
       SMODS.pseudorandom_probability(card, 'star_slotmachine', 1, card.ability.extra.odds) then
       context.other_card:set_ability('m_lucky')
     end
   end,
   credits = {
-    code = "cartridges",
-    idea = "cartridges",
+    code = "Esther",
+    idea = "Esther",
   }
 }
 
@@ -209,19 +210,27 @@ SMODS.Joker {
   config = { extra = { Xmult_gain = 0.5, Xmult = 1 } },
   rarity = 4,
   cost = 10,
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, center)
+		return { vars = { center.ability.extra.Xmult }  }
+	end,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and context.other_card:get_id() == 7 then
+    if context.individual and context.cardarea == G.play and context.other_card:get_id() == 7 and not context.blueprint then
       card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_gain
       return {
         message = 'Upgraded!',
         colour = G.C.RED
       }
-    elseif context.final_scoring_step then
+    elseif context.joker_main then
       return {
         xmult = card.ability.extra.Xmult
       }
     end
-  end
+  end,
+  credits = {
+    idea = 'Esther',
+    code = 'Esther'
+  }
 }
 
 -- Triton
@@ -243,22 +252,32 @@ SMODS.Joker {
   config = { extra = { Xmult = 1 } },
   rarity = 4,
   cost = 10,
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, center)
+		return { vars = { center.ability.extra.Xmult }  }
+	end,
   calculate = function(self, card, context)
     if context.final_scoring_step then
       card.ability.extra.Xmult = math.floor(G.GAME.dollars / 10)
-      if card.ability.extra.Xmult < 10 then card.ability.extra.Xmult = 1 end
+      if math.floor(G.GAME.dollars / 10) < 2 then card.ability.extra.Xmult = 1 end
       return {
         xmult = card.ability.extra.Xmult
       }
     end
     if context.ending_shop then
+      card.ability.extra.Xmult = math.floor(G.GAME.dollars / 10)
+      if math.floor(G.GAME.dollars / 10) < 2 then card.ability.extra.Xmult = 1 end
       return {
         dollars = -math.floor(G.GAME.dollars / 20)
       }
     end
+    if context.discard or context.pre_joker or context.buying_card or context.selling_card or context.reroll_shop or context.using_consumeable then
+      card.ability.extra.Xmult = math.floor(G.GAME.dollars / 10)
+      if math.floor(G.GAME.dollars / 10) < 2 then card.ability.extra.Xmult = 1 end
+    end
   end,
   credits = {
-    code = "cartridges",
+    code = "Esther",
     idea = "illusion2",
   }
 }
@@ -271,7 +290,7 @@ SMODS.Joker {
     text = {
       'This joker gains {C:chips}+5{} Chips when',
       'each played {C:chips}Bonus{} card is scored',
-      '{C:inactive}(Currently {C:chips} +#1# {C:inactive} Chips)'
+      '{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)'
     }
   },
   pools = {
@@ -280,15 +299,19 @@ SMODS.Joker {
   config = { extra = { chips = 0, chip_gain = 5 } },
   rarity = 2,
   cost = 6,
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, center)
+		return { vars = { center.ability.extra.chips }  }
+	end,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play and context.other_card.config.center.key == 'm_bonus' then
+    if context.individual and context.cardarea == G.play and context.other_card.config.center.key == 'm_bonus' and not context.blueprint then
       card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_gain
       return {
         message = 'Upgraded!',
         colour = G.C.RED,
       }
     end
-    if context.final_scoring_step then
+    if context.joker_main then
       return {
         chips = card.ability.extra.chips,
       }
@@ -313,6 +336,7 @@ SMODS.Joker {
   config = { extra = { mult = 3 } },
   rarity = 2,
   cost = 6,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card.config.center.key == 'm_mult' then
       context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult
@@ -323,7 +347,52 @@ SMODS.Joker {
     end
   end,
   credits = {
-    code = 'cartridges',
+    code = 'Esther',
     idea = 'illusion2'
+  }
+}
+
+-- Lion Joker
+SMODS.Joker {
+  key = 'star_lion',
+  loc_txt = {
+    name = 'Lion Joker',
+    text = {
+      'Gains {C:white,X:mult}X0.1{} Mult for',
+      'each played {C:attention}Wild Card{}',
+      '{C:inactive}(Currently {C:white,X:mult}X#1#{C:inactive} Mult)'
+    }
+  },
+  pools = {
+    ['starlight-addition'] = true
+  },
+  config = { extra = { Xmult = 1, Xmult_gain = 0.1 } },
+  rarity = 2,
+  cost = 6,
+  blueprint_compat = true,
+  loc_vars = function(self, info_queue, center)
+		return { vars = { center.ability.extra.Xmult }  }
+	end,
+  calculate = function(self, card, context)
+    if context.before and not context.blueprint then
+      local add = 0
+      for k, v in pairs(G.play.cards) do
+        if SMODS.has_enhancement(v, "m_wild") then
+          add = add + 1
+        end
+      end
+      for i = 1, add do
+        card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_gain
+      end
+    end
+    if context.final_scoring_step then
+      return {
+        xmult = card.ability.extra.Xmult
+      }
+    end
+  end
+  credits = {
+    idea = 'ibra',
+    code = 'Revo'
   }
 }

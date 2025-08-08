@@ -1,0 +1,7 @@
+{
+    "Lua.diagnostics.globals": [
+        "G",
+        "SMODS",
+        "hand_chips"
+    ]
+}
