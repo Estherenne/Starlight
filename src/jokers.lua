@@ -53,8 +53,9 @@ SMODS.Joker {
   loc_txt = {
     name = 'Niko',
     text = {
-      'Played {C:attention}face{} cards with {C:diamonds}Diamond{} suit',
-      'give {X:mult,C:white}X3{} mult and become {C:attention}Glass{}',
+      'Played {C:attention}face{} cards',
+      'with {C:diamonds}Diamond{} suit',
+      'give {X:mult,C:white}X3{} Mult and become {C:attention}Glass{}',
     },
   },
   pools = {
@@ -314,7 +315,7 @@ SMODS.Joker {
   cost = 6,
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and context.other_card.config.center.key == 'm_mult' then
-      context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + card.ability.extra.mult
+      context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult
       return {
         message = 'Upgraded!',
         colour = G.C.RED

@@ -10,4 +10,4 @@
 | Soen | This joker gains X0.5 Mult when each played 7 is scored | Legendary | ✔️ | I am not accepting PRs for the artwork of this joker - I want to do it on my own |
 | Triton | Gives 10% of total cash as Xmult; at the end of shop, lose 5% of total cash. | Legendary | ✔️ | Triton is a character from Xenoblade Chronicles 3; please make the artwork be him |
 | Paycheck | This joker gains +5 Chips when each played Bonus Card is scored | Uncommon | ✔️ | Will be renamed |
-| Fliegen | Every played Mult Card permanently gains +3 Mult when scored | Uncommon | ✔️ | Just make a flying fly the artwork of this joker; also doesn't work properly right now |
+| Fliegen | Every played Mult Card permanently gains +3 Mult when scored | Uncommon | ✔️ | Just make a flying fly the artwork of this joker |
