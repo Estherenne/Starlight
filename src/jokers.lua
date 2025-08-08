@@ -390,7 +390,7 @@ SMODS.Joker {
         xmult = card.ability.extra.Xmult
       }
     end
-  end
+  end,
   credits = {
     idea = 'ibra',
     code = 'Revo'
