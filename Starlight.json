@@ -1,0 +1,16 @@
+{
+	"id": "starlight",
+	"name": "Starlight",
+	"display_name": "Starlight",
+	"author": ["cartridges"],
+	"description": "A general content mod.",
+	"prefix": "star",
+	"main_file": "core.lua",
+	"priority": 0,
+	"badge_colour": "#3472ed",
+	"badge_text_colour": "#cdd6f4",
+	"version": "0.1.0",
+	"dependencies": [
+    "libcredit (==0.*)"
+  ],
+}
