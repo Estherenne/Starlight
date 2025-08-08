@@ -24,11 +24,15 @@ A content mod for Balatro.
 - Try to keep it balanced. If you are unsure, create an issue with your idea and I'll try to help.
 
 ### Art
-- Joker cards are 71 x 95, Astral Cards are 63 x 93.
+- Joker cards are 71 x 95, collectible cards are 63 x 93.
+- Artwork for Astral cards is always a real constellation! Put the constellation into the empty space in the middle, and put the name of the constellation on the plate above.
+- Legendary jokers are styled the same way as vanilla legendary jokers.
 - Once you are done with creating the artwork, put it in the `assets/1x` folder. Then, create a new image twice the resolution, paste in whatever you were making, and scale it up 2x its size using nearest neighbour interpolation. Put the scaled image into `assets/2x`.
 - Please use submit only `.psd` project files. This doesn't mean you only have to use Photoshop! Krita supports `.psd` out of the box, and paint.NET supports it with a plugin.
 - Use layers. Please. For your own and others's sanities.
 - Try to stay close to the Vanilla art style, but experimentation is always appreciated.
+- Artwork is required to be in some way related to the name of whatever you're making
+- See [ADDITIONS.md](ADDITIONS.md) for what needs artwork
 
 ### Ideas / Concepts
 - Ideas for ***anything*** are appreciated!
